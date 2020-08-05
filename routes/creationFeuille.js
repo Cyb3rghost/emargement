@@ -251,51 +251,67 @@ router.post('/', function(req, res, next) {
                     // See below for browser usage
                     doc.pipe(fs.createWriteStream('output.pdf'));
 
-                    headerPDF(doc, result.logo, result.intitule, result.organisme);
+                    /*headerPDF(doc, result.logo, result.intitule, result.organisme);
      
-                    bodyPDF(doc, apprenant, jourSemaine, formateur, positionApprenant, indexApprenant);
+                    bodyPDF(doc, apprenant, jourSemaine, formateur, positionApprenant, indexApprenant);*/
 
-                    var initialVar = 20
+                    compteur = 0;
+                    debut = 0;
+                    fin = 5;
 
-                    for (let i = positionApprenant; i <= apprenant.length; i++) {
-                        const element = apprenant[i];
-                        console.log(apprenant[i])
-
-                        indexApprenant++;
-                        positionApprenant++;
+                    apprenant.forEach(element => {
                         
-
-                        if(indexApprenant === initialVar && apprenant[i-1].length != 0)
+                        if(compteur === 5)
                         {
-
-                            /*if(initialVar != apprenant.length)
-                            {
-
-                                console.log('INITVAR : ' + initialVar + ' / APPLENGTH : ' + apprenant.length)
-                                initialVar = initialVar + 5
-
-                            }*/
 
                             doc.addPage()
                             headerPDF(doc, result.logo, result.intitule, result.organisme);
-                            bodyPDF(doc, apprenant, jourSemaine, formateur, positionApprenant, indexApprenant);
+                            bodyPDF(doc, apprenant, jourSemaine, formateur, debut, fin);
 
-                            console.log('----- NOUVELLE PAGE ---')
-                            console.log('TOTAL APPRENANT : ' + apprenant.length)
-                            
-                            console.log('POSITION APPRENANT : ' + positionApprenant)
-                            console.log('INDEX APPRENANT : ' + indexApprenant)
-                            console.log('----- NOUVELLE PAGE ---')
+                            compteur = 0;
+                            debut = debut + 5 
+                            fin = fin + 5 
 
-
-    
                         }
 
-                        /*console.log('POSITION APPRENANT : ' + positionApprenant)
-                        console.log('INDEX APPRENANT : ' + indexApprenant)*/
-                        
-                    }
+                        compteur++;
 
+                    });
+
+                    // SA SERT A CORRIGER LA VRAI FIN DU TABLEAU ET RAJOUTER CE QUI RESTE.
+                    if(fin != apprenant.length)
+                    {
+
+                        fin = fin - 5
+
+                        doc.addPage()
+                        headerPDF(doc, result.logo, result.intitule, result.organisme);
+                        bodyPDF(doc, apprenant, jourSemaine, formateur, fin, apprenant.length);
+
+
+                    }
+                    
+
+                    /*for (let j = 0; j < (fin - apprenant.length); j++) {
+
+                        debut = fin
+                        fin =  fin - apprenant.length
+
+                        console.log(fin)
+
+                        if(j === apprenant.length - fin)
+                        {
+
+                            doc.addPage()
+                            headerPDF(doc, result.logo, result.intitule, result.organisme);
+                            bodyPDF(doc, apprenant, jourSemaine, formateur, debut, fin);
+
+                            compteur = 0;
+                            debut = debut + 5 
+
+                        }
+                        
+                    }*/
 
                     // Finalize PDF file
                     doc.end();
