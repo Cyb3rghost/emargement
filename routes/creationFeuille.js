@@ -255,18 +255,27 @@ router.post('/', function(req, res, next) {
      
                     bodyPDF(doc, apprenant, jourSemaine, formateur, positionApprenant, indexApprenant);
 
-                    var initialVar = 10
+                    var initialVar = 20
 
                     for (let i = positionApprenant; i <= apprenant.length; i++) {
-                        //const element = array[i];
+                        const element = apprenant[i];
+                        console.log(apprenant[i])
 
                         indexApprenant++;
                         positionApprenant++;
                         
-                        if(indexApprenant === initialVar)
+
+                        if(indexApprenant === initialVar && apprenant[i-1].length != 0)
                         {
 
-    
+                            /*if(initialVar != apprenant.length)
+                            {
+
+                                console.log('INITVAR : ' + initialVar + ' / APPLENGTH : ' + apprenant.length)
+                                initialVar = initialVar + 5
+
+                            }*/
+
                             doc.addPage()
                             headerPDF(doc, result.logo, result.intitule, result.organisme);
                             bodyPDF(doc, apprenant, jourSemaine, formateur, positionApprenant, indexApprenant);
@@ -278,12 +287,7 @@ router.post('/', function(req, res, next) {
                             console.log('INDEX APPRENANT : ' + indexApprenant)
                             console.log('----- NOUVELLE PAGE ---')
 
-                            if(initialVar != apprenant.length)
-                            {
 
-                                initialVar = initialVar + 5
-
-                            }
     
                         }
 
