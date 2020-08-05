@@ -1,0 +1,31 @@
+<div class="modal fade" id="creationFeuille" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Générer une feuille d'émargement</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="/creation-feuille">
+              <div class="form-group">
+                <label for="template">Template</label>
+                <select class="form-control" name="template" id="template">
+                    <% listeTemplate.forEach(function(infoTMP) { %>
+                        <option value="<%= infoTMP._id %>"><%= infoTMP.nomTemplate %></option>
+                    <% }); %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="urlGoogleSheet">Url de la feuille google sheet</label>
+                <input type="text" class="form-control" value="https://docs.google.com/spreadsheets/d/1MwmH02zMoH8weoE9uH2qp8tGyu5V43ggnFuEpW-E4_A/edit#gid=0" name="urlGoogleSheet" id="urlGoogleSheet">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Création</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>

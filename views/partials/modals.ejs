@@ -1,0 +1,35 @@
+<div class="modal fade" id="creationTemplate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création de template</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form  method="post" enctype="multipart/form-data" action="/creation-template">
+            <div class="form-group">
+              <label for="nom_template">Nom du template</label>
+              <input type="text" class="form-control" name="nom_template" placeholder="TEMPLATE<%= Math.round(Math.random()*100) %>" required>
+            </div>
+            <div class="form-group">
+              <label for="googleSheet">Organisme de formation</label>
+              <input type="text" class="form-control" name="organisme" value="SIMPLON REUNION" id="intitule">
+            </div>
+            <div class="form-group">
+              <label for="logo">Logo</label>
+              <input type="file" name="logo" class="form-control-file" id="logo">
+            </div>
+            <div class="form-group">
+              <label for="googleSheet">Intitulé</label>
+              <input type="text" class="form-control" name="intitule" value="Contrat d'apprentissage - TP Développeur.se Web Web Mobile" id="intitule">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Création</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
