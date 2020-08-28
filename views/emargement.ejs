@@ -16,6 +16,25 @@
       <h1>Emargement Zone</h1>
   
     </div>
+
+    <% feuilles.forEach(function(feuille){ %>
+        <div class="card">
+
+            <div class="card-body">
+
+                <a href="/updateTemplate/<%= feuille._id %>" data-id="<%= feuille._id %>" data-toggle="modal" data-target="#updateFeuille" class="float-right updateFeuille"><img src="https://img.icons8.com/plasticine/25/000000/approve-and-update.png"/></a>
+
+                <b>ID : </b> <%= feuille._id %> - [Du <b><%= feuille.periodeDebut %></b> au <b><%= feuille.periodeFin %></b>]<br/>
+                <b>Template : </b> <%= feuille.template.nomTemplate %> <br/>
+                <b>Pdf : </b> <a href="<%= feuille.pdf %>" target="_blank"><%= feuille.pdf %></a><br/>
+                <b>Url Sheet : </b> <a href="<%= feuille.urlSheet %>" target="_blank"><%= feuille.urlSheet %></a> <br/>
+                <b>Crée le : </b> <%= feuille.createdAt %>
+
+            </div>
+
+        </div>
+    <% }); %>
+
 </main>
 
 <footer>
@@ -24,6 +43,9 @@
 
 <% include ./partials/modals %>
 <% include ./partials/modalsDeux , { listeTemplate: listeTemplate } %>
+
+<script src="/javascripts/updateTemplate.js"></script>
+
 
 </body>
 </html>

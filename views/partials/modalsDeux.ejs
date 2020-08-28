@@ -29,3 +29,59 @@
       </div>
     </div>
   </div>
+
+
+  <div class="modal fade" id="updateTemplate" tabindex="-1" role="dialog" aria-labelledby="updateTemplate" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mise à jour template</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" enctype="multipart/form-data" action="/updateTemplate">
+            <div class="form-group">
+              <label for="logo">Nouveau logo (laissez vide si vous souhaitez conserver le logo actuel)</label>
+              <input type="file" name="logo" class="form-control-file" id="logo">
+            </div>
+            <div class="updateForm">
+
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block">Mise à jour</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="modal fade" id="updateFeuille" tabindex="-1" role="dialog" aria-labelledby="updateFeuille" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mise à jour feuille</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" action="/actionSurFeuille">
+          <div class="modal-body">
+            
+              <div class="updateFormFeuille">
+
+              </div>
+
+          </div>
+          <div class="modal-footer">
+            <div class="form-group">
+              <button type="submit" name="action" value="Synchronisation" class="btn btn-primary">Synchronisation</button>
+              <button type="submit" name="action" value="Générer le pdf" class="btn btn-danger">Générer le pdf</button>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+  </div>

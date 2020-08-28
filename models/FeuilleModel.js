@@ -13,11 +13,32 @@ var FeuilleSchema = new mongoose.Schema({
 	  type: String,
 	  required: true
 	},
+	apprenant: {
+		type: Array,
+	},
+	jourSemaine: {
+		type: Array,
+	},
+	formateur: {
+		type: Array,
+	},
+	signature: {
+		type: Array,
+	},
 	pdf: {
 		type: String,
 		default: null
+	},
+	periodeDebut: {
+		type: String,
+		default: null
+	},
+	periodeFin: {
+		type: String,
+		default: null
 	}
-});
+
+}, {timestamps: true});
 
 module.exports = mongoose.model('Feuille', FeuilleSchema);
 

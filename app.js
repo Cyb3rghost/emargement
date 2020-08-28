@@ -14,8 +14,14 @@ var connexionRouter = require('./routes/connexion');
 var connectRouter = require('./routes/connect');
 var logoutRouter = require('./routes/logout');
 var emargementRouter = require('./routes/emargement');
+var templateRouter = require('./routes/template')
 var cFeuilleRouter = require('./routes/creationFeuille');
 var cTemplateRouter = require('./routes/creationTemplate');
+var suppressionTemplateRouter = require('./routes/suppressionTemplate');
+var infoTemplate = require('./routes/infoTemplate');
+var infoFeuille = require('./routes/infoFeuille');
+var updateTemplate = require('./routes/updateTemplate');
+var actionSurFeuille = require('./routes/actionSurFeuille');
 
 var app = express();
 
@@ -34,6 +40,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 
 //use sessions for tracking logins
 app.use(session({
@@ -79,7 +88,12 @@ app.use('/logout', logoutRouter);
 app.use('/emargement', requiresLogin, emargementRouter);
 app.use('/creation-feuille', requiresLogin, cFeuilleRouter);
 app.use('/creation-template', requiresLogin, cTemplateRouter);
-
+app.use('/template', requiresLogin, templateRouter);
+app.use('/suppressionTemplate', requiresLogin, suppressionTemplateRouter);
+app.use('/infoTemplate', requiresLogin, infoTemplate);
+app.use('/infoFeuille', requiresLogin, infoFeuille);
+app.use('/updateTemplate', requiresLogin, updateTemplate);
+app.use('/actionSurFeuille', requiresLogin, actionSurFeuille);
 
 app.use('/users', usersRouter);
 

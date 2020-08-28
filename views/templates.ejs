@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ./partials/header %>
+</header>
+
+<main>
+    <div class="jumbotron">
+      
+
+      <h1>Templates</h1>
+  
+    </div>
+
+    <% listeTemplate.forEach(function(template){ %>
+        <div class="card">
+
+            <div class="card-body">
+                <a href="/suppressionTemplate/<%= template._id %>" class="float-right"><img src="https://img.icons8.com/fluent/25/000000/delete-sign.png"/></a>
+                <a href="#" class="float-right updateTemplate" data-id="<%= template._id %>" data-toggle="modal" data-target="#updateTemplate"><img src="https://img.icons8.com/plasticine/25/000000/approve-and-update.png"/></a>
+                
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <img src="<%= template.logo %>" width="200" alt="Responsive image">
+
+                    </div>
+                    <div class="col-md-8">
+
+                        <b>ID : </b> <%= template._id %> <br/>
+                        <b>Nom template : </b> <%= template.nomTemplate %> <br/>
+                        <b>Organisme : </b> <%= template.organisme %> <br/>
+                        <b>Intitule : </b> <%= template.intitule %> <br/>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    <% }); %>
+
+</main>
+
+<footer>
+    <% include ./partials/footer %>
+</footer>
+
+<% include ./partials/modals %>
+<% include ./partials/modalsDeux , { listeTemplate: listeTemplate } %>
+
+<script src="/javascripts/updateTemplate.js"></script>
+
+</body>
+</html>

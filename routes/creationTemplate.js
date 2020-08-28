@@ -49,7 +49,7 @@ router.post('/', uploadImage, function(req, res, next) {
               return next(err)
             } else {
 
-              res.redirect('/emargement');
+              res.redirect('/template');
 
             }
           });

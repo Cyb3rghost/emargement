@@ -2,163 +2,12 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 const axios = require('axios').default;
-const PDFDocument = require('pdfkit');
 const fs = require('fs');
 var Feuille = require('../models/FeuilleModel');
 var Template = require('../models/TemplateModel');
 
 
 router.post('/', function(req, res, next) {
-
-    function headerPDF(doc, logo, intitule, organisme)
-    {
-
-        doc.image(logo, 100, 50, {width: 120})
-
-        doc.fontSize(14);
-        doc.text('FEUILLE D\'EMARGEMENT -> PERIODE EN FORMATION', 250, 50);
-        doc.fontSize(10)
-        doc.font('Helvetica-Bold').text('Intitulé : ' + intitule, 250, 75);
-        doc.text('Organisme de formation : ' + organisme, 250, 100);
-
-    }
-
-    function bodyPDF(doc, apprenant, jourSemaine, formateur, departApprenant, finApprenant)
-    {
-
-        var startApprenant = 200
-        /*doc.lineJoin('miter')
-            .rect(100, 175, 140, 25)
-            .stroke();*/
-
-        doc.lineJoin('miter')
-            .rect(100, 200, 140, 45)
-            .stroke()
-            .fontSize(9)
-            .text('NOM PRENOM APPRENANT(E)', 105, 220);
-
-        var tailleInitial = 245
-        var tailleEvolution = 0
-
-        for (let a = departApprenant; a < finApprenant; a++) {
-            const element = apprenant[a];
-            
-            doc.lineJoin('miter')
-            .rect(100, startApprenant + 45, 140, 35)
-            .stroke()
-            .text(element, 105, startApprenant + 55);
-
-            startApprenant = startApprenant + 35
-            tailleEvolution = tailleEvolution + 35
-
-        }
-
-        /*apprenant.forEach(element => {
-
-            doc.lineJoin('miter')
-            .rect(100, startApprenant + 45, 140, 35)
-            .stroke()
-            .text(element, 105, startApprenant + 55);
-
-            startApprenant = startApprenant + 35
-            tailleEvolution = tailleEvolution + 35
-
-        });*/
-
-        var startSignatureLigne = 210
-        var startSignatureApremDescend = 210
-        var startJour = 100
-        var startJourAprem = 170
-
-        jourSemaine.forEach(element => {
-                    
-                /* BLOC DATE */
-                doc.lineJoin('miter')
-                .rect(startJour + 140, 175, 140, 25)
-                .stroke()
-                .fontSize(12)
-                .text('Le ' + element, startJour + 160 + 5, 185);
-
-                doc.lineJoin('miter')
-                .rect(startJour + 140, 200, 70, 45)
-                .stroke()
-                .fontSize(7)
-                .text('MATIN(4h)', startJour + 140, 220, {
-                    width: 70,
-                    align: 'center'
-                });
-
-                doc.lineJoin('miter')
-                .rect(startJourAprem + 140, 200, 70, 45)
-                .stroke()
-                .fontSize(7)
-                .text('APRES-MIDI(3h)', startJourAprem + 140, 220, {
-                    width: 70,
-                    align: 'center'
-                })
-
-                for (let index = departApprenant; index < finApprenant; index++) {
-
-                    doc.lineJoin('miter')
-                    .rect(startJour + 140, startSignatureLigne + 35, 70, 35)
-                    .stroke()
-
-                    doc.lineJoin('miter')
-                    .rect(startJourAprem + 140, startSignatureApremDescend + 35, 70, 35)
-                    .stroke()
-
-                    startSignatureLigne = startSignatureLigne + 35
-                    startSignatureApremDescend = startSignatureApremDescend + 35
-                    
-                }
-
-                startSignatureLigne = 210
-                startSignatureApremDescend = 210
-                startJour = startJour + 140
-                startJourAprem = startJourAprem + 140
-                
-
-        });
-
-        /* BLOC DATE */
-        var tailleFinal = tailleInitial + tailleEvolution
-        console.log('TAILLE FINAL : ' + tailleFinal)
-
-        var positionDepart = 100
-        var positionDepartText = 100
-
-        formateur.forEach(element => {
-
-            doc.lineJoin('miter')
-            .rect(positionDepart + 140, tailleFinal, 140, 55)
-            .stroke()
-            .fontSize(8)
-            .text('Nom Prénom Formateur(.rice)', positionDepartText + 140, tailleFinal + 5, {
-                width: 140,
-                align: 'center'
-            })
-            .fontSize(10)
-            .text(element, {
-                width: 140,
-                align: 'center'
-            });
-
-            positionDepart = positionDepart + 140
-            positionDepartText = positionDepartText + 140
-
-        });
-
-        doc.lineJoin('miter')
-        .rect(positionDepart, tailleFinal + 100, 140, 60, {
-            align: 'right'
-        })
-        .stroke()
-        .fontSize(8)
-        .text('Cachet organisme de formation:', positionDepart + 5 ,tailleFinal + 105, {
-            width: 140
-        })
-
-    }
 
     console.log(req)
 
@@ -240,85 +89,16 @@ router.post('/', function(req, res, next) {
             });
 
             Template.findById(req.body.template).then(result => {
-          
-                    // Create a document
-                    const doc = new PDFDocument({
-                        size: 'legal',
-                        layout: 'landscape'
-                    });
-
-                    // Pipe its output somewhere, like to a file or HTTP response
-                    // See below for browser usage
-                    doc.pipe(fs.createWriteStream('output.pdf'));
-
-                    /*headerPDF(doc, result.logo, result.intitule, result.organisme);
-     
-                    bodyPDF(doc, apprenant, jourSemaine, formateur, positionApprenant, indexApprenant);*/
-
-                    compteur = 0;
-                    debut = 0;
-                    fin = 5;
-
-                    apprenant.forEach(element => {
-                        
-                        if(compteur === 5)
-                        {
-
-                            doc.addPage()
-                            headerPDF(doc, result.logo, result.intitule, result.organisme);
-                            bodyPDF(doc, apprenant, jourSemaine, formateur, debut, fin);
-
-                            compteur = 0;
-                            debut = debut + 5 
-                            fin = fin + 5 
-
-                        }
-
-                        compteur++;
-
-                    });
-
-                    // SA SERT A CORRIGER LA VRAI FIN DU TABLEAU ET RAJOUTER CE QUI RESTE.
-                    if(fin != apprenant.length)
-                    {
-
-                        fin = fin - 5
-
-                        doc.addPage()
-                        headerPDF(doc, result.logo, result.intitule, result.organisme);
-                        bodyPDF(doc, apprenant, jourSemaine, formateur, fin, apprenant.length);
-
-
-                    }
-                    
-
-                    /*for (let j = 0; j < (fin - apprenant.length); j++) {
-
-                        debut = fin
-                        fin =  fin - apprenant.length
-
-                        console.log(fin)
-
-                        if(j === apprenant.length - fin)
-                        {
-
-                            doc.addPage()
-                            headerPDF(doc, result.logo, result.intitule, result.organisme);
-                            bodyPDF(doc, apprenant, jourSemaine, formateur, debut, fin);
-
-                            compteur = 0;
-                            debut = debut + 5 
-
-                        }
-                        
-                    }*/
-
-                    // Finalize PDF file
-                    doc.end();
 
                     var feuilleData = {
                         template: req.body.template,
-                        urlSheet: req.body.urlGoogleSheet
+                        urlSheet: req.body.urlGoogleSheet,
+                        apprenant: apprenant,
+                        jourSemaine: jourSemaine,
+                        formateur: formateur,
+                        pdf: '',
+                        periodeDebut: jourSemaine[0],
+                        periodeFin: jourSemaine[jourSemaine.length - 1]
                     }
 
                     console.log(apprenant)
