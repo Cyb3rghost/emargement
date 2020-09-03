@@ -31,6 +31,7 @@ var lienSignature = require('./routes/lienSignature');
 
 /* API */
 var users = require('./api/routes/users');
+var majSignature = require('./api/routes/majsignature');
 /* API */
 
 var app = express();
@@ -113,6 +114,7 @@ app.use('/lien-signature', lienSignature);
 /* API */
 
 app.use('/api/users', users);
+app.use('/api/majsignature', majSignature);
 
 
 /* API */

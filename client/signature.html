@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>EmarGen - Client</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+
+    .wrapper {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .signature-pad {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width:100%;
+      height:250px;
+      border: 1px solid black;
+      background-color: white;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">EmarGen</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+    
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12" style="margin-top: 15%; margin-bottom: 15%;">
+        
+            <h1>Gêrer ma signature</h1>
+            <hr>
+            <div class="wrapper">
+              <canvas id="signature-pad" class="signature-pad"></canvas>
+            </div>
+            
+            <button id="save-png">Sauvegarder</button>
+            <button id="draw">Dessigner</button>
+            <button id="erase">Effacer</button>
+            <button id="clear">Tout effacer</button>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.slim.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <script src="script/userController.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+
+  <script>
+
+    var navBarHeader = ''
+    var username = localStorage.getItem('username')
+
+    if(localStorage.getItem('access_token') === null)
+    {
+
+      location.href = 'index.html';
+
+    }
+
+    if(localStorage.getItem('id') != null)
+    {
+
+      navBarHeader += `<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Bienvenu, ${username}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="dashboard.html">Dashboard</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item"  href="#" onclick="deconnexion()">Déconnexion</a>
+        </div>
+      </li>`
+
+
+      $('.navbar-nav').html(navBarHeader)
+
+    }
+
+    function deconnexion()
+    {
+
+      localStorage.removeItem('id');
+      localStorage.removeItem('username');
+      localStorage.removeItem('email');
+      localStorage.removeItem('access_token');
+
+      location.href = 'index.html';
+
+    }
+
+    var canvas = document.getElementById('signature-pad');
+
+    // Adjust canvas coordinate space taking into account pixel ratio,
+    // to make it look crisp on mobile devices.
+    // This also causes canvas to be cleared.
+    function resizeCanvas() {
+        // When zoomed out to less than 100%, for some very strange reason,
+        // some browsers report devicePixelRatio as less than 1
+        // and only part of the canvas is cleared then.
+        var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+    }
+
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+
+    var signaturePad = new SignaturePad(canvas, {
+      backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+    });
+
+    document.getElementById('save-png').addEventListener('click', function () {
+      if (signaturePad.isEmpty()) {
+        return alert("Please provide a signature first.");
+      }
+      
+      var data = signaturePad.toDataURL('image/png');
+      console.log(data);
+      //window.open(data);
+
+      var url = 'http://127.0.0.1:3000/api/majsignature/' + localStorage.getItem('id') + '/test'
+      
+      axios.post(url)
+        .then(function (response) {
+
+          console.log(response)
+
+          
+        })
+        .catch(function (error) {
+            console.log(error)
+      });
+
+
+    });
+
+    
+    document.getElementById('clear').addEventListener('click', function () {
+      signaturePad.clear();
+    });
+
+    document.getElementById('draw').addEventListener('click', function () {
+      var ctx = canvas.getContext('2d');
+      console.log(ctx.globalCompositeOperation);
+      ctx.globalCompositeOperation = 'source-over'; // default value
+    });
+
+    document.getElementById('erase').addEventListener('click', function () {
+      var ctx = canvas.getContext('2d');
+      ctx.globalCompositeOperation = 'destination-out';
+    });
+
+  </script>
+
+
+</body>
+
+</html>

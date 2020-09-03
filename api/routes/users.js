@@ -10,6 +10,9 @@ var Cookies = require( "cookies" );
 /* GET users listing. */
 router.get('/:email/:password', function(req, res, next) {
 
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+
     var email = req.params.email
     var mdp = req.params.password
 
@@ -24,7 +27,7 @@ router.get('/:email/:password', function(req, res, next) {
       
     mongoose.connect(mongo.uri, mongo.opt)
 
-    if(idUser && mdp)
+    if(email && mdp)
     {
 
         User.findOne({ email: email })
@@ -39,12 +42,9 @@ router.get('/:email/:password', function(req, res, next) {
                     
                     var token = jwt.sign(result, 'secret');
 
-                    new Cookies(req,res).set('access_token',token , {
-                        httpOnly: true
-                    });
-
                     res.status(200).send({
                         message: 'Enjoy your token!',
+                        user: user,
                         xsrfToken : token
                     });
 
