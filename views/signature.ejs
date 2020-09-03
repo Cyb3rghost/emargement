@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ./partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ./partials/header %>
+</header>
+
+<body>
+
+    <div class="container">
+
+        <h1>Gestion des liens de signature</h1>
+        <hr>
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <form method="post" action="/generation-lien">
+
+                    <select class="form-control" name="jour" id="exampleFormControlSelect1">
+                        <% infosFeuille.jourSemaine.forEach(function(jour){ %>
+                            <option><%= jour %></option>
+
+                       <% }); %>
+                    </select>
+
+                    <br/>
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Matin</th>
+                            <th scope="col">Après-midi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td><input type="radio" value="Matin" name="jsignature"></td>
+                                <td><input type="radio" value="Aprem" name="jsignature"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <input type="hidden" value="<%= infosFeuille._id %>" name="idFeuille" class="form-control" />
+                    <input type="hidden" value="<%= numLigne %>" name="indexLigne" class="form-control" />
+
+                    <button class="btn btn-dark btn-block" type="submit">Générer</button>
+                  </form>
+
+            </div>
+            <div class="col-md-6">
+
+                <ul class="list-group">
+                    <% liens.forEach(function(lien){ %>
+                        <% let timeCreated = lien.createdAt; let timeNow = new Date(); let endTimer = timeNow - timeCreated; var min = Math.floor((endTimer/1000/60) << 0) 
+                        if(min > 10) { %>
+                            <li class="list-group-item" style="background-color: #FF6868;"><%= lien.jour %> - <%= lien.eleve %> - <%= lien.moment %> - Expirée</li>
+                        <% }else{ %>
+                            <a href="/lien-signature/<%= lien._id %>"><li class="list-group-item"><%= lien.jour %> - <%= lien.eleve %> - <%= lien.moment %> - <%= min %> Minutes</li></a>
+                        <% } %>
+                    <% }); %>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <footer>
+        <% include ./partials/footer %>
+    </footer>
+
+</body>
+
+</html>

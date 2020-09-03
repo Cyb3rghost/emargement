@@ -20,8 +20,18 @@ var cTemplateRouter = require('./routes/creationTemplate');
 var suppressionTemplateRouter = require('./routes/suppressionTemplate');
 var infoTemplate = require('./routes/infoTemplate');
 var infoFeuille = require('./routes/infoFeuille');
+var infoSignature = require('./routes/infoSignature');
 var updateTemplate = require('./routes/updateTemplate');
 var actionSurFeuille = require('./routes/actionSurFeuille');
+var testPDF = require('./routes/testPDF');
+var signature = require('./routes/signature');
+var generationLien = require('./routes/generationLien');
+var lienSignature = require('./routes/lienSignature');
+
+
+/* API */
+var users = require('./api/routes/users');
+/* API */
 
 var app = express();
 
@@ -92,8 +102,24 @@ app.use('/template', requiresLogin, templateRouter);
 app.use('/suppressionTemplate', requiresLogin, suppressionTemplateRouter);
 app.use('/infoTemplate', requiresLogin, infoTemplate);
 app.use('/infoFeuille', requiresLogin, infoFeuille);
+app.use('/infoSignature', requiresLogin, infoSignature);
 app.use('/updateTemplate', requiresLogin, updateTemplate);
 app.use('/actionSurFeuille', requiresLogin, actionSurFeuille);
+app.use('/testPDF', requiresLogin, testPDF);
+app.use('/signature', requiresLogin, signature);
+app.use('/generation-lien', requiresLogin, generationLien);
+app.use('/lien-signature', lienSignature);
+
+/* API */
+
+app.use('/api/users', users);
+
+
+/* API */
+
+
+
+
 
 app.use('/users', usersRouter);
 
