@@ -15,6 +15,14 @@
         <% } else { %>
 
             <img class="mx-auto d-block" src="<%= qrcode %>">
+            <form method="post" action="/validation-signature">
+                <center>
+                    <input type="hidden" name="infosSignature" value="<%= validationInfos %>"/>
+                    <input type="hidden" name="signatureEleve" value="<%= signatureEleve %>" />
+                    <button class="btn btn-dark" type="submit">Je signe</button>
+                </center>
+            </form>
+            
 
         <% } %>
         

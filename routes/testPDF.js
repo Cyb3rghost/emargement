@@ -283,9 +283,9 @@ router.get('/:id/:idTemplate', function(req, res, next) {
                                             
                                             
 
-                                            positionSignature.push(['Page', page, elementDeux, 'Date1', 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature', 'Date2', 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
-                                            ,  'Date3',  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature',  'Date4', 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
-                                            ,  'Date5',  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'])
+                                            positionSignature.push(['Page', page, elementDeux, resultUn.jourSemaine[0], 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature', resultUn.jourSemaine[1], 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
+                                            ,  resultUn.jourSemaine[2],  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature',  resultUn.jourSemaine[3], 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
+                                            ,  resultUn.jourSemaine[4],  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'])
 
                                     }
             
@@ -539,9 +539,9 @@ router.get('/:id/:idTemplate', function(req, res, next) {
                                     renduHtml += `</tr>
                                     `
 
-                                        positionSignature.push(['Page', page, elementDeux, 'Date1', 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature', 'Date2', 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
-                                        ,  'Date3',  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature',  'Date4', 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
-                                        ,  'Date5',  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'])
+                                        positionSignature.push(['Page', page, elementDeux, resultUn.jourSemaine[0], 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature', resultUn.jourSemaine[1], 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
+                                        ,  resultUn.jourSemaine[2],  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature',  resultUn.jourSemaine[3], 'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'
+                                        ,  resultUn.jourSemaine[4],  'Matin', 'Pas de signature', 'Aprem', 'Pas de signature'])
 
                                 }
 

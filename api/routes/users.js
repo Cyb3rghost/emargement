@@ -4,14 +4,9 @@ var router = express.Router();
 const bcrypt = require('bcrypt');
 var jwt  = require('jsonwebtoken');
 var User = require('../../models/UserModel');
-var Cookies = require( "cookies" );
-
 
 /* GET users listing. */
 router.get('/:email/:password', function(req, res, next) {
-
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
 
     var email = req.params.email
     var mdp = req.params.password

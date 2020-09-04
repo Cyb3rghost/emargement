@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var Feuille = require('../models/FeuilleModel');
-var Template = require('../models/TemplateModel');
+var User = require('../models/UserModel');
 var Lien = require('../models/LienModel');
 var QRCode = require('qrcode')
 
 /* GET users listing. */
-router.get('/:id/', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
 
     var idSignature = req.params.id
-
+ 
     Lien.findById( idSignature ).then(result => {
 
         let timeCreated = result.createdAt; 
@@ -38,12 +38,20 @@ router.get('/:id/', function(req, res, next) {
 
         var retourSignature = result.feuille + '/' + result.jour + '/' + result.moment + '/' + result.indexLigne + '/' + result.eleve
 
-        QRCode.toDataURL(retourSignature, opts, function (err, url) {
+        User.find( {username: result.eleve} ).then(resultDeux => {
 
-            res.render('../views/lienSignature', {
-                liens : result,
-                expiration: expiration,
-                qrcode: url
+            console.log(resultDeux[0].username)
+
+            QRCode.toDataURL(retourSignature, opts, function (err, url) {
+
+                res.render('../views/lienSignature', {
+                    liens : result,
+                    expiration: expiration,
+                    qrcode: url,
+                    validationInfos: retourSignature,
+                    signatureEleve: resultDeux[0].signature
+                });
+
             });
 
         });

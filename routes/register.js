@@ -38,8 +38,7 @@ router.post('/', function(req, res, next) {
               var userData = {
                 email: req.body.email,
                 username: req.body.username,
-                password: req.body.password,
-                signature: ''
+                password: req.body.password
               }
               //use schema.create to insert data into the db
               User.create(userData, function (err, user) {

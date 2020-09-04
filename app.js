@@ -27,11 +27,14 @@ var testPDF = require('./routes/testPDF');
 var signature = require('./routes/signature');
 var generationLien = require('./routes/generationLien');
 var lienSignature = require('./routes/lienSignature');
+var validationSignature = require('./routes/validationSignature');
 
+var middleware = require('./api/middleware');
 
 /* API */
 var users = require('./api/routes/users');
 var majSignature = require('./api/routes/majsignature');
+var liens = require('./api/routes/liens');
 /* API */
 
 var app = express();
@@ -110,18 +113,15 @@ app.use('/testPDF', requiresLogin, testPDF);
 app.use('/signature', requiresLogin, signature);
 app.use('/generation-lien', requiresLogin, generationLien);
 app.use('/lien-signature', lienSignature);
+app.use('/validation-signature', validationSignature)
 
 /* API */
 
-app.use('/api/users', users);
-app.use('/api/majsignature', majSignature);
-
+app.use('/api/users', middleware, users);
+app.use('/api/majsignature', middleware, majSignature);
+app.use('/api/liens', middleware, liens);
 
 /* API */
-
-
-
-
 
 app.use('/users', usersRouter);
 

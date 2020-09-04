@@ -17,7 +17,7 @@
 
     .wrapper {
       position: relative;
-      width: 100%;
+      width: 250px;
       height: 250px;
       -moz-user-select: none;
       -webkit-user-select: none;
@@ -29,7 +29,7 @@
       position: absolute;
       left: 0;
       top: 0;
-      width:100%;
+      width:250px;
       height:250px;
       border: 1px solid black;
       background-color: white;
@@ -63,6 +63,10 @@
         
             <h1>Gêrer ma signature</h1>
             <hr>
+
+            <div id="message"></div>
+            <div id="signature"></div>
+
             <div class="wrapper">
               <canvas id="signature-pad" class="signature-pad"></canvas>
             </div>
@@ -78,7 +82,7 @@
   </div>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="script/userController.js"></script>
@@ -93,6 +97,19 @@
     {
 
       location.href = 'index.html';
+
+    }
+
+    if(localStorage.getItem('signature') === 'null')
+    {
+
+      $('#message').html('<div class="alert alert-danger">Aucune signature enregistré pour le moment...</div>')
+
+    }
+    else
+    {
+
+      $('#signature').html('<img src="' + localStorage.getItem('signature') + '">')
 
     }
 
@@ -121,6 +138,7 @@
       localStorage.removeItem('id');
       localStorage.removeItem('username');
       localStorage.removeItem('email');
+      localStorage.removeItem('signature');
       localStorage.removeItem('access_token');
 
       location.href = 'index.html';
@@ -158,18 +176,30 @@
       console.log(data);
       //window.open(data);
 
-      var url = 'http://127.0.0.1:3000/api/majsignature/' + localStorage.getItem('id') + '/test'
-      
-      axios.post(url)
-        .then(function (response) {
+      var url = 'http://127.0.0.1:3000/api/majsignature/'
 
-          console.log(response)
+        axios.post(url, {
+            id: localStorage.getItem('id'),
+            signature: data
+          })
+          .then(function (response) {
 
-          
-        })
-        .catch(function (error) {
-            console.log(error)
-      });
+            console.log(response.data)
+
+            if(response.data === "Signature enregistré")
+            {
+
+              localStorage.setItem('signature', data);
+              location.href = 'signature.html';
+
+
+            }
+
+            
+          })
+          .catch(function (error) {
+              console.log(error)
+        });
 
 
     });

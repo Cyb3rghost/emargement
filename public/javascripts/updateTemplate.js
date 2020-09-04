@@ -130,7 +130,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[5] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[5]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[5]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -143,7 +143,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[7] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[7]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[7]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -156,7 +156,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[10] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[10]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[10]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -169,7 +169,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[12] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[12]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[12]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -182,7 +182,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[15] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[15]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[15]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -195,7 +195,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[17] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[17]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[17]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -208,7 +208,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[20] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[20]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[20]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -221,7 +221,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[22] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[22]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[22]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -234,7 +234,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[25] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[25]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[25]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
@@ -247,7 +247,7 @@ $('.afficheSignature').on('click', function() {
                                                         if(element[27] != "Pas de signature")
                                                         {
 
-                                                            infoSignature += `<td><img src="./${element[27]}" width="60" alt=""></td>`
+                                                            infoSignature += `<td><img src="${element[27]}" width="60" alt=""></td>`
 
                                                         }
                                                         else
